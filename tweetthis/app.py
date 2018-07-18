@@ -9,9 +9,9 @@ from microcosm_secretsmanager.loaders.conventions import load_from_secretsmanage
 
 from tweetthis.config import load_default_config
 import tweetthis.postgres  # noqa
-import tweetthis.routes.example.controller  # noqa
-import tweetthis.routes.example.crud   # noqa
-import tweetthis.stores.example_store  # noqa
+import tweetthis.routes.user.controller  # noqa
+import tweetthis.routes.user.crud   # noqa
+import tweetthis.stores.user_store  # noqa
 
 
 def create_app(debug=False, testing=False, model_only=False):
@@ -37,7 +37,7 @@ def create_app(debug=False, testing=False, model_only=False):
     )
 
     graph.use(
-        "example_store",
+        "user_store",
         "logging",
         "postgres",
         "sessionmaker",
@@ -55,7 +55,7 @@ def create_app(debug=False, testing=False, model_only=False):
             "postgres_health_check",
             "swagger_convention",
             # routes
-            "example_routes",
+            "user_routes",
         )
 
     return graph.lock()

@@ -1,5 +1,5 @@
 """
-Example CRUD routes.
+User CRUD routes.
 
 """
 from microcosm.api import binding
@@ -8,38 +8,39 @@ from microcosm_flask.conventions.crud import configure_crud
 from microcosm_flask.operations import Operation
 from microcosm_postgres.context import transactional
 
-from tweetthis.resources.example_resources import (
-    ExampleSchema,
-    NewExampleSchema,
-    SearchExampleSchema,
+from tweetthis.resources.user_resources import (
+    NewUserSchema,
+    SearchUserSchema,
+    UpdateUserSchema,
+    UserSchema,
 )
 
 
-@binding("example_routes")
-def configure_example_routes(graph):
-    controller = graph.example_controller
+@binding("user_routes")
+def configure_user_routes(graph):
+    controller = graph.user_controller
     mappings = {
         Operation.Create: EndpointDefinition(
             func=transactional(controller.create),
-            request_schema=NewExampleSchema(),
-            response_schema=ExampleSchema(),
+            request_schema=NewUserSchema(),
+            response_schema=UserSchema(),
         ),
         Operation.Delete: EndpointDefinition(
             func=transactional(controller.delete),
         ),
-        Operation.Replace: EndpointDefinition(
-            func=transactional(controller.replace),
-            request_schema=NewExampleSchema(),
-            response_schema=ExampleSchema(),
-        ),
         Operation.Retrieve: EndpointDefinition(
             func=controller.retrieve,
-            response_schema=ExampleSchema(),
+            response_schema=UserSchema(),
         ),
         Operation.Search: EndpointDefinition(
             func=controller.search,
-            request_schema=SearchExampleSchema(),
-            response_schema=ExampleSchema(),
+            request_schema=SearchUserSchema(),
+            response_schema=UserSchema(),
+        ),
+        Operation.Update: EndpointDefinition(
+            func=transactional(controller.update),
+            request_schema=UpdateUserSchema(),
+            response_schema=UserSchema(),
         ),
     }
     configure_crud(graph, controller.ns, mappings)

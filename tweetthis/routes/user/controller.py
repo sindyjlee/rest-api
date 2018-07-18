@@ -1,21 +1,21 @@
 """
-Example controller.
+User controller.
 
 """
 from microcosm.api import binding
 from microcosm_flask.conventions.crud_adapter import CRUDStoreAdapter
 from microcosm_flask.namespaces import Namespace
 
-from tweetthis.models.example_model import Example
+from tweetthis.models.user import User
 
 
-@binding("example_controller")
-class ExampleController(CRUDStoreAdapter):
+@binding("user_controller")
+class UserController(CRUDStoreAdapter):
 
     def __init__(self, graph):
-        super().__init__(graph, graph.example_store)
+        super().__init__(graph, graph.user_store)
 
         self.ns = Namespace(
-            subject=Example,
+            subject=User,
             version="v1",
         )
