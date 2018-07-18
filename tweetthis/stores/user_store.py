@@ -24,6 +24,7 @@ class UserStore(Store):
         email=None,
         first_name=None,
         last_name=None,
+        user_id_list=None,
         **kwargs
     ):
         if username is not None:
@@ -42,9 +43,17 @@ class UserStore(Store):
             query = query.filter(
                 User.last_name == last_name,
             )
+        if user_id_list is not None:
+            query = query.filter(
+                User.id.in_(user_id_list)
+            )
         return super()._filter(query, **kwargs)
 
     def _order_by(self, query, **kwargs):
+        """
+        Sort users by username.
+
+        """
         return query.order_by(
             User.username.asc(),
         )

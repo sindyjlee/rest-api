@@ -15,6 +15,7 @@ import tweetthis.routes.tweet.controller  # noqa
 import tweetthis.routes.tweet.crud   # noqa
 import tweetthis.routes.user.controller  # noqa
 import tweetthis.routes.user.crud   # noqa
+import tweetthis.routes.user.for_user  # noqa
 import tweetthis.stores.follower_relationship_store  # noqa
 import tweetthis.stores.tweet_store  # noqa
 import tweetthis.stores.user_store  # noqa
@@ -66,6 +67,7 @@ def create_app(debug=False, testing=False, model_only=False):
             "follower_relationship_routes",
             "tweet_routes",
             "user_routes",
+            "user_relation_routes",
         )
 
     return graph.lock()

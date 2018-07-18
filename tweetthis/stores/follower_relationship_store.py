@@ -32,6 +32,20 @@ class FollowerRelationshipStore(Store):
         return super()._filter(query, **kwargs)
 
     def _order_by(self, query, **kwargs):
+        """
+        Sort by descending created date aka most recent first.
+
+        """
         return query.order_by(
             FollowerRelationship.created_at.desc(),
         )
+
+    def get_following_user_ids_by_user(self, user_id):
+        """
+        Return list of ids for users the given user is following.
+
+        """
+        # get all follower relationships where given user is follower
+        following = self.search(follower_id=user_id)
+        # return list of ids for users being followed by given user
+        return [user.user_id for user in following]

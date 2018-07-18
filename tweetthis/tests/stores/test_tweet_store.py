@@ -62,36 +62,3 @@ class TestTweet:
 
         retrieved_tweet = self.tweet_store.retrieve(self.tweet.id)
         assert_that(retrieved_tweet, is_(equal_to(self.tweet)))
-
-    def test_search_by_username(self):
-        with transaction():
-            self.tweet_store.create(self.tweet)
-
-        other_user = User(
-            username="glen.runciter",
-            email="glen.runciter@runciter.com",
-            first_name="Glen",
-            last_name="Runciter",
-            title="Big Boss",
-            bio="",
-        )
-        other_tweet_content = """
-            The best way to ask for beer is to sing out Ubik.
-            Made from select hops, choice water, slow-aged for perfect flavor,
-            Ubik is the nation’s number-one choice in beer. Made only in Cleveland.
-        """
-
-        with transaction():
-            self.user_store.create(other_user)
-
-            self.tweet_store.create(Tweet(
-                user_id=other_user.id,
-                tweet_content=other_tweet_content,
-            ))
-
-        retrieved_tweets = self.tweet_store.search_by_username(
-            self.username
-        )
-
-        assert_that(len(retrieved_tweets), is_(equal_to(1)))
-        assert_that(retrieved_tweets[0], is_(equal_to(self.tweet)))
