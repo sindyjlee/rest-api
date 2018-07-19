@@ -82,6 +82,42 @@ class UserSchema(NewUserSchema):
             ),
             user_id=obj.id,
         )
+        links["tweets"] = Link.for_(
+            Operation.SearchFor,
+            Namespace(
+                subject=User,
+                object_="tweets",
+                version="v1",
+            ),
+            user_id=obj.id,
+        )
+        links["followers"] = Link.for_(
+            Operation.SearchFor,
+            Namespace(
+                subject=User,
+                object_="followers",
+                version="v1",
+            ),
+            user_id=obj.id,
+        )
+        links["following"] = Link.for_(
+            Operation.SearchFor,
+            Namespace(
+                subject=User,
+                object_="following",
+                version="v1",
+            ),
+            user_id=obj.id,
+        )
+        links["feed"] = Link.for_(
+            Operation.SearchFor,
+            Namespace(
+                subject=User,
+                object_="feed",
+                version="v1",
+            ),
+            user_id=obj.id,
+        )
         return links.to_dict()
 
 

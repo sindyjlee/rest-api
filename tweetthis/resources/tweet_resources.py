@@ -10,6 +10,7 @@ from microcosm_flask.operations import Operation
 from microcosm_flask.paging import PageSchema
 
 from tweetthis.models.tweet import Tweet
+from tweetthis.models.user import User
 
 
 class NewTweetSchema(Schema):
@@ -45,6 +46,14 @@ class TweetSchema(NewTweetSchema):
                 version="v1",
             ),
             tweet_id=obj.id,
+        )
+        links["user"] = Link.for_(
+            Operation.Retrieve,
+            Namespace(
+                subject=User,
+                version="v1",
+            ),
+            user_id=obj.user_id,
         )
         return links.to_dict()
 
